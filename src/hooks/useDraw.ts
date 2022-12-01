@@ -1,12 +1,13 @@
-import { MutableRefObject, useContext } from 'react';
+import { useContext } from 'react';
 import { AppContext } from '../AppContext';
 
-export default function useDraw(
-  canvasCtx: MutableRefObject<CanvasRenderingContext2D | undefined>
-) {
-  const {} = useContext(AppContext);
+export default function useDraw(canvasCtx: CanvasRenderingContext2D | null) {
+  const { image } = useContext(AppContext);
 
-  const draw = async () => {};
+  const draw = async () => {
+    if (!image || !canvasCtx) return;
+    canvasCtx.putImageData(image, 0, 0);
+  };
 
   return { draw };
 }
