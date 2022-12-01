@@ -1,18 +1,18 @@
 .App {
   height: 100%;
   display: grid;
-  grid: 1fr / 350px 1fr;
+  grid: 1fr / 350px 1fr auto;
   grid-template-areas: 'menu canvas-container';
 }
 
 .canvas-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: auto;
 }
 
 canvas {
   image-rendering: pixelated;
+  margin: auto;
 }
 
 .alert {

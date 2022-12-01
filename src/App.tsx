@@ -5,6 +5,7 @@ import { AppContext } from './AppContext';
 import useForceRerender from './hooks/useForceRerender';
 import useError from './hooks/useError';
 import useImage from './hooks/useImage';
+import Histogram from './components/Histogram';
 
 function App() {
   const { forceRerender } = useForceRerender();
@@ -26,6 +27,7 @@ function App() {
         <div className='canvas-container'>
           <Canvas />
         </div>
+        <Histogram />
       </div>
       <div className={`alert ${showError ? 'show' : ''}`}>
         <div className='alert-icon'>⚠️</div>
