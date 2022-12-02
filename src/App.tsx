@@ -6,12 +6,14 @@ import useForceRerender from './hooks/useForceRerender';
 import useError from './hooks/useError';
 import useImage from './hooks/useImage';
 import Histogram from './components/Histogram';
+import useDrawMode from './hooks/useDrawMode';
 
 function App() {
   const { forceRerender } = useForceRerender();
   const { showError, errorText, setErrorText } = useError();
 
   const { image, readImageFile } = useImage();
+  const { drawMode, setDrawMode } = useDrawMode();
 
   return (
     <AppContext.Provider
@@ -20,6 +22,8 @@ function App() {
         forceRerender,
         image,
         readImageFile,
+        drawMode,
+        setDrawMode,
       }}
     >
       <div className='App'>
