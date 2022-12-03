@@ -9,8 +9,8 @@ function Canvas() {
 
   const { canvasCtx, canvasRef } = useCanvas();
   const { draw } = useDraw(canvasCtx);
-  const { handleMouseDown, handleMouseMove, handleMouseUp } =
-    useMouseHandlers(canvasRef);
+  const { handleMouseDown, handleMouseMove, handleMouseUp, handleMouseLeave } =
+    useMouseHandlers(canvasRef, draw);
 
   useEffect(() => {
     draw();
@@ -24,6 +24,7 @@ function Canvas() {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
     />
   );
 }

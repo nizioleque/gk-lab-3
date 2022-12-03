@@ -1,5 +1,6 @@
-import { useContext, useEffect, useRef, MouseEvent } from 'react';
+import { useContext, useRef, MouseEvent } from 'react';
 import { AppContext } from '../AppContext';
+import { BRUSH_RADIUS } from './useDraw';
 import { DrawMode } from './useDrawMode';
 
 interface Point {
@@ -7,16 +8,19 @@ interface Point {
   y: number;
 }
 
-interface DrawState {
+export interface DrawState {
   polygon?: Point[];
   brushPosition?: Point;
-  paintedPixels?: boolean[];
+  isPressed?: boolean;
+  paintedPixels?: boolean[][];
 }
 
 export default function useMouseHandlers(
-  canvasRef: React.MutableRefObject<HTMLCanvasElement | null>
+  canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
+  draw: (drawState: DrawState) => Promise<void>
 ) {
-  const { drawMode } = useContext(AppContext);
+  const { drawMode, image } = useContext(AppContext);
+  const drawState = useRef<DrawState>({});
 
   const getMousePosition = (event: MouseEvent): Point => {
     const rect = canvasRef.current?.getBoundingClientRect()!;
@@ -26,14 +30,16 @@ export default function useMouseHandlers(
     };
   };
 
-  const drawState = useRef<DrawState>({});
-
-  useEffect(() => {}, [drawMode]);
-
   const handleMouseDown = (event: MouseEvent) => {
-    console.log('mouseDown');
     switch (drawMode) {
       case DrawMode.Brush:
+        const w = canvasRef.current?.width ?? 100;
+        const h = canvasRef.current?.height ?? 100;
+        drawState.current.isPressed = true;
+        drawState.current.paintedPixels = Array.from(
+          Array(w),
+          () => new Array(h)
+        );
         break;
       case DrawMode.Polygon:
         break;
@@ -41,11 +47,34 @@ export default function useMouseHandlers(
   };
 
   const handleMouseMove = (event: MouseEvent) => {
-    console.log('mouseMove');
     switch (drawMode) {
       case DrawMode.Brush:
-        drawState.current.brushPosition = getMousePosition(event);
-        console.log('new brush pos: ', drawState.current.brushPosition);
+        const pos = getMousePosition(event);
+        drawState.current.brushPosition = pos;
+
+        if (drawState.current.isPressed) {
+          const w = canvasRef.current?.width ?? 100;
+          const h = canvasRef.current?.height ?? 100;
+          const iMin = Math.max(0, pos.x - BRUSH_RADIUS);
+          const iMax = Math.min(w, pos.x + BRUSH_RADIUS);
+          const jMin = Math.max(0, pos.y - BRUSH_RADIUS);
+          const jMax = Math.min(h, pos.y + BRUSH_RADIUS);
+          for (let i = iMin; i < iMax; i++) {
+            for (let j = jMin; j < jMax; j++) {
+              if (
+                distSq(pos, { x: i, y: j }) <= BRUSH_RADIUS * BRUSH_RADIUS &&
+                !drawState.current.paintedPixels![i][j]
+              ) {
+                if (image) image.data[(j * w + i) * 4] -= 30;
+                if (image) image.data[(j * w + i) * 4 + 1] -= 30;
+                if (image) image.data[(j * w + i) * 4 + 2] -= 30;
+                drawState.current.paintedPixels![i][j] = true;
+              }
+            }
+          }
+        }
+
+        draw(drawState.current);
         break;
       case DrawMode.Polygon:
         break;
@@ -53,14 +82,24 @@ export default function useMouseHandlers(
   };
 
   const handleMouseUp = (event: MouseEvent) => {
-    console.log('mouseUp');
     switch (drawMode) {
       case DrawMode.Brush:
+        drawState.current.isPressed = false;
+        drawState.current.paintedPixels = undefined;
         break;
       case DrawMode.Polygon:
         break;
     }
   };
 
-  return { handleMouseDown, handleMouseMove, handleMouseUp, drawState };
+  const handleMouseLeave = (event: MouseEvent) => {
+    drawState.current.brushPosition = undefined;
+    draw(drawState.current);
+  };
+
+  return { handleMouseDown, handleMouseMove, handleMouseUp, handleMouseLeave };
+}
+
+function distSq(p1: Point, p2: Point): number {
+  return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
 }
