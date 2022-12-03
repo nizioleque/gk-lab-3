@@ -8,7 +8,7 @@ interface AppContext {
   readImageFile: (file: Blob) => void;
   drawMode: DrawMode;
   setDrawMode: Dispatch<SetStateAction<DrawMode>>;
-  filter: Filter | null;
+  filter: Filter;
   setFilter: (type: FilterType, fn: (value: number) => number) => void;
 }
 
@@ -19,7 +19,7 @@ const appContextDefaultValue: AppContext = {
   readImageFile: () => {},
   drawMode: DrawMode.Brush,
   setDrawMode: () => {},
-  filter: null,
+  filter: { type: FilterType.None, fn: (value) => value },
   setFilter: () => {},
 };
 

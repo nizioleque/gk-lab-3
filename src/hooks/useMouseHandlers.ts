@@ -19,7 +19,7 @@ export default function useMouseHandlers(
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
   draw: (drawState: DrawState) => Promise<void>
 ) {
-  const { drawMode, image } = useContext(AppContext);
+  const { drawMode, image, filter } = useContext(AppContext);
   const drawState = useRef<DrawState>({});
 
   const getMousePosition = (event: MouseEvent): Point => {
@@ -47,6 +47,7 @@ export default function useMouseHandlers(
   };
 
   const handleMouseMove = (event: MouseEvent) => {
+    if (!image) return;
     switch (drawMode) {
       case DrawMode.Brush:
         const pos = getMousePosition(event);
@@ -65,9 +66,15 @@ export default function useMouseHandlers(
                 distSq(pos, { x: i, y: j }) <= BRUSH_RADIUS * BRUSH_RADIUS &&
                 !drawState.current.paintedPixels![i][j]
               ) {
-                if (image) image.data[(j * w + i) * 4] -= 30;
-                if (image) image.data[(j * w + i) * 4 + 1] -= 30;
-                if (image) image.data[(j * w + i) * 4 + 2] -= 30;
+                image.data[(j * w + i) * 4 + 0] = filter.fn(
+                  image.data[(j * w + i) * 4 + 0]
+                );
+                image.data[(j * w + i) * 4 + 1] = filter.fn(
+                  image.data[(j * w + i) * 4 + 1]
+                );
+                image.data[(j * w + i) * 4 + 2] = filter.fn(
+                  image.data[(j * w + i) * 4 + 2]
+                );
                 drawState.current.paintedPixels![i][j] = true;
               }
             }
