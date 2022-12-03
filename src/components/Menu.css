@@ -43,7 +43,7 @@
   transition: background-color 100ms ease-in-out;
 }
 
-.menu-button :not(button) {
+.menu-button {
   font-size: 0.9rem;
 }
 
@@ -60,7 +60,7 @@
 .horizontal {
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   gap: 5px;
 }
 
@@ -135,10 +135,17 @@ h1 {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-input {
+input[type='file'] {
   flex: 1;
   padding: 5px 10px;
   border: 1px rgba(0, 0, 0, 0.3) solid;
   border-radius: 5px;
   accent-color: #6761e6;
+}
+
+input[type='number'] {
+  width: 100px;
+  padding: 3px;
+  border: 1px rgba(0, 0, 0, 0.3) solid;
+  border-radius: 5px;
 }

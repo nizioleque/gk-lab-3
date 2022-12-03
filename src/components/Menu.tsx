@@ -2,7 +2,9 @@ import { useContext } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { AppContext } from '../AppContext';
 import { DrawMode } from '../hooks/useDrawMode';
+import { FilterType } from '../hooks/useFilter';
 import Button from './Button';
+import FilterButton from './FilterButton';
 import './Menu.css';
 
 function Menu() {
@@ -70,6 +72,27 @@ function Menu() {
           >
             Obszar zostanie zamalowany po zamknięciu wielokąta
           </AnimateHeight>
+        </div>
+      </div>
+      <div className='menu-section'>
+        <h3>Filtry</h3>
+        <div className='buttons'>
+          <FilterButton
+            text='Brak'
+            type={FilterType.None}
+            fnBuilder={() => (value) => value}
+          />
+          <FilterButton
+            text='Negacja'
+            type={FilterType.Negation}
+            fnBuilder={() => (value) => 255 - value}
+          />
+          <FilterButton
+            text='Jasność'
+            type={FilterType.Brightness}
+            fnBuilder={(param) => (value) => value + param}
+            showParam
+          />
         </div>
       </div>
     </div>

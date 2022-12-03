@@ -7,6 +7,7 @@ import useError from './hooks/useError';
 import useImage from './hooks/useImage';
 import Histogram from './components/Histogram';
 import useDrawMode from './hooks/useDrawMode';
+import useFilter from './hooks/useFilter';
 
 function App() {
   const { forceRerender } = useForceRerender();
@@ -14,6 +15,7 @@ function App() {
 
   const { image, readImageFile } = useImage();
   const { drawMode, setDrawMode } = useDrawMode();
+  const { filter, setFilter } = useFilter();
 
   return (
     <AppContext.Provider
@@ -24,6 +26,8 @@ function App() {
         readImageFile,
         drawMode,
         setDrawMode,
+        filter,
+        setFilter,
       }}
     >
       <div className='App'>
