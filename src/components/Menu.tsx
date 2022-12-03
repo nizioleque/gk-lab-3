@@ -93,6 +93,21 @@ function Menu() {
             fnBuilder={(param) => (value) => value + param}
             showParam
           />
+          <FilterButton
+            text='Kontrast'
+            type={FilterType.Contrast}
+            fnBuilder={(param) => (value) => {
+              const a = 128 / (128 - param);
+              return a * value - a * param;
+            }}
+            showParam
+          />
+          <FilterButton
+            text='Korekcja gamma'
+            type={FilterType.Gamma}
+            fnBuilder={(param) => (value) => Math.pow(value / 255, param) * 255}
+            showParam
+          />
         </div>
       </div>
     </div>
