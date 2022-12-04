@@ -5,6 +5,7 @@ import { DrawMode } from '../hooks/useDrawMode';
 import { FilterType } from '../hooks/useFilter';
 import Button from './Button';
 import FilterButton from './FilterButton';
+import FilterPreview from './FilterPreview';
 import './Menu.css';
 
 function Menu() {
@@ -77,6 +78,9 @@ function Menu() {
       <div className='menu-section'>
         <h3>Filtry</h3>
         <div className='buttons'>
+          <h5>Podgląd</h5>
+          <FilterPreview />
+          <h5>Wybór</h5>
           <FilterButton
             text='Brak'
             type={FilterType.None}
