@@ -19,7 +19,7 @@ export default function useMouseHandlers(
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
   draw: (drawState: DrawState) => Promise<void>
 ) {
-  const { drawMode, image, filter } = useContext(AppContext);
+  const { drawMode, image, filter, setIsMouseDown } = useContext(AppContext);
   const drawState = useRef<DrawState>({});
 
   const getMousePosition = (event: MouseEvent): Point => {
@@ -31,6 +31,7 @@ export default function useMouseHandlers(
   };
 
   const handleMouseDown = (event: MouseEvent) => {
+    setIsMouseDown(true);
     switch (drawMode) {
       case DrawMode.Brush:
         const w = canvasRef.current?.width ?? 100;
@@ -89,6 +90,7 @@ export default function useMouseHandlers(
   };
 
   const handleMouseUp = (event: MouseEvent) => {
+    setIsMouseDown(false);
     switch (drawMode) {
       case DrawMode.Brush:
         drawState.current.isPressed = false;
@@ -100,6 +102,8 @@ export default function useMouseHandlers(
   };
 
   const handleMouseLeave = (event: MouseEvent) => {
+    setIsMouseDown(false);
+    drawState.current.isPressed = false;
     drawState.current.brushPosition = undefined;
     draw(drawState.current);
   };

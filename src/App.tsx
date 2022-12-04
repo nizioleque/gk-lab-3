@@ -8,6 +8,7 @@ import useImage from './hooks/useImage';
 import Histogram from './components/Histogram';
 import useDrawMode from './hooks/useDrawMode';
 import useFilter from './hooks/useFilter';
+import { useState } from 'react';
 
 function App() {
   const { forceRerender } = useForceRerender();
@@ -16,6 +17,7 @@ function App() {
   const { image, readImageFile } = useImage();
   const { drawMode, setDrawMode } = useDrawMode();
   const { filter, setFilter } = useFilter();
+  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
   return (
     <AppContext.Provider
@@ -28,6 +30,8 @@ function App() {
         setDrawMode,
         filter,
         setFilter,
+        isMouseDown,
+        setIsMouseDown,
       }}
     >
       <div className='App'>

@@ -10,13 +10,13 @@ interface HistogramData {
 }
 
 function Histogram() {
-  const { image } = useContext(AppContext);
+  const { image, isMouseDown } = useContext(AppContext);
 
   const [histogramData, setHistogramData] = useState<HistogramData | null>(
     null
   );
 
-  useEffect(() => {
+  const render = async () => {
     if (!image) return;
     const newHistogramData: HistogramData = { r: [], g: [], b: [] };
     const imageData = Array.from(image.data);
@@ -36,10 +36,17 @@ function Histogram() {
       i = (i + 1) % 4;
     }
     setHistogramData(newHistogramData);
+  };
+
+  useEffect(() => {
+    render();
   }, [image]);
+  useEffect(() => {
+    if (!isMouseDown) render();
+  }, [isMouseDown]);
 
   return (
-    <div className='menu' style={{ width: 339 }}>
+    <div className='menu' style={{ width: 341 }}>
       <header>
         <h1>Histogram</h1>
       </header>

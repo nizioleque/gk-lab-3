@@ -15,12 +15,15 @@ function HistogramChart({ color, data }: HistogramChart) {
         },
       ]}
       layout={{
-        width: 291,
+        width: 293,
         height: 256,
         showlegend: false,
-        margin: { l: 35, t: 0, r: 0, b: 0 },
+        margin: { l: 37, t: 0, r: 0, b: 0 },
         dragmode: false,
         colorway: [color],
+        xaxis: {
+          range: [-1, 256],
+        },
       }}
       config={{ staticPlot: true }}
     />

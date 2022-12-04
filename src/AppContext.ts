@@ -10,6 +10,8 @@ interface AppContext {
   setDrawMode: Dispatch<SetStateAction<DrawMode>>;
   filter: Filter;
   setFilter: (type: FilterType, fn: (value: number) => number) => void;
+  isMouseDown: boolean;
+  setIsMouseDown: (value: boolean) => void;
 }
 
 const appContextDefaultValue: AppContext = {
@@ -21,6 +23,8 @@ const appContextDefaultValue: AppContext = {
   setDrawMode: () => {},
   filter: { type: FilterType.None, fn: (value) => value },
   setFilter: () => {},
+  isMouseDown: false,
+  setIsMouseDown: () => {},
 };
 
 export const AppContext = createContext<AppContext>(appContextDefaultValue);
