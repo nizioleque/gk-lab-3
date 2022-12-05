@@ -12,6 +12,8 @@ interface AppContext {
   setFilter: (type: FilterType, fn: (value: number) => number) => void;
   isMouseDown: boolean;
   setIsMouseDown: (value: boolean) => void;
+  currentBezier: number[];
+  setCurrentBezier: Dispatch<SetStateAction<number[]>>;
 }
 
 const appContextDefaultValue: AppContext = {
@@ -25,6 +27,8 @@ const appContextDefaultValue: AppContext = {
   setFilter: () => {},
   isMouseDown: false,
   setIsMouseDown: () => {},
+  currentBezier: [],
+  setCurrentBezier: () => {},
 };
 
 export const AppContext = createContext<AppContext>(appContextDefaultValue);

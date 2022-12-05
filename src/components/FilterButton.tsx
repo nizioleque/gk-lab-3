@@ -5,7 +5,7 @@ import { FilterType } from '../hooks/useFilter';
 interface FilterButtonProps {
   text: string;
   type: FilterType;
-  fnBuilder: (param: number) => (value: number) => number;
+  fnBuilder?: (param: number) => (value: number) => number;
   showParam?: boolean;
 }
 
@@ -20,7 +20,8 @@ function FilterButton({
   const paramRef = useRef<HTMLInputElement | null>(null);
 
   const apply = () => {
-    setFilter(type, fnBuilder(parseFloat(paramRef.current?.value ?? '0')));
+    if (fnBuilder)
+      setFilter(type, fnBuilder(parseFloat(paramRef.current?.value ?? '0')));
   };
 
   return (

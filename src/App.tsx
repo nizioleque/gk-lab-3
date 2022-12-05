@@ -18,6 +18,7 @@ function App() {
   const { drawMode, setDrawMode } = useDrawMode();
   const { filter, setFilter } = useFilter();
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+  const [currentBezier, setCurrentBezier] = useState<number[]>([]);
 
   return (
     <AppContext.Provider
@@ -32,6 +33,8 @@ function App() {
         setFilter,
         isMouseDown,
         setIsMouseDown,
+        currentBezier,
+        setCurrentBezier,
       }}
     >
       <div className='App'>

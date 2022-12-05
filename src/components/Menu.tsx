@@ -3,13 +3,15 @@ import AnimateHeight from 'react-animate-height';
 import { AppContext } from '../AppContext';
 import { DrawMode } from '../hooks/useDrawMode';
 import { FilterType } from '../hooks/useFilter';
+import BezierGraph from './BezierGraph';
 import Button from './Button';
 import FilterButton from './FilterButton';
 import FilterPreview from './FilterPreview';
 import './Menu.css';
 
 function Menu() {
-  const { readImageFile, drawMode, setDrawMode } = useContext(AppContext);
+  const { readImageFile, drawMode, setDrawMode, filter, currentBezier } =
+    useContext(AppContext);
 
   const readExampleImage = (path: string) => {
     fetch(path)
@@ -112,6 +114,18 @@ function Menu() {
             fnBuilder={(param) => (value) => Math.pow(value / 255, param) * 255}
             showParam
           />
+          <FilterButton
+            text='Niestandardowy (Bezier)'
+            type={FilterType.Custom}
+            fnBuilder={() => (value) => currentBezier[value] ?? 0}
+          />
+          <AnimateHeight
+            height={filter.type == FilterType.Custom ? 'auto' : 0}
+            duration={300}
+            easing='ease-in-out'
+          >
+            <BezierGraph />
+          </AnimateHeight>
         </div>
       </div>
     </div>
