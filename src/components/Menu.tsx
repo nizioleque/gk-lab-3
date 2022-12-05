@@ -51,6 +51,24 @@ function Menu() {
             <div>Lena</div>
             <button className='apply-button'>Otwórz</button>
           </div>
+          <div
+            className='menu-button horizontal'
+            onClick={() => {
+              readExampleImage('/newyork.jpeg');
+            }}
+          >
+            <div>Nowy Jork</div>
+            <button className='apply-button'>Otwórz</button>
+          </div>
+          <div
+            className='menu-button horizontal'
+            onClick={() => {
+              readExampleImage('/brighton.jpg');
+            }}
+          >
+            <div>Brighton</div>
+            <button className='apply-button'>Otwórz</button>
+          </div>
         </div>
       </div>
       <div className='menu-section'>
