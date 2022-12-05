@@ -1,4 +1,4 @@
-# Object Viewer
+# Image Filter
 
 Norbert Niziołek – Grafika komputerowa 1
 
@@ -6,7 +6,7 @@ Norbert Niziołek – Grafika komputerowa 1
 
 ### Przez stronę internetową (zalecane)
 
-Aplikacja jest dostępna pod adresem https://object-viewer.niziolek.dev.
+Aplikacja jest dostępna pod adresem https://image-filter.niziolek.dev.
 
 ### Uruchomienie na lokalnej maszynie
 
@@ -27,5 +27,3 @@ Następnie, aby uruchomić aplikację:
 ## Instrukcja obsługi
 
 Wszystkie opcje dostępne są w menu z lewej strony ekranu.
-
-Odradza się korzystania z przeglądarki Safari – nie wspiera ona rysowania na oddzielnym wątku, przez co interfejs użytkownika zacina się.
