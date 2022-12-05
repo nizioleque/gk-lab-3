@@ -24,6 +24,15 @@ function HistogramChart({ color, data }: HistogramChart) {
         xaxis: {
           range: [0, 255],
         },
+        yaxis: {
+          gridcolor: 'rgba(255, 255, 255, 0.2)',
+          zerolinecolor: 'rgba(255, 255, 255, 0.2)',
+        },
+        paper_bgcolor: 'black',
+        plot_bgcolor: 'black',
+        font: {
+          color: 'rgba(255, 255, 255, 0.8)',
+        },
       }}
       config={{ staticPlot: true }}
     />

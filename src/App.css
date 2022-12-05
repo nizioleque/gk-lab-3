@@ -3,6 +3,9 @@
   display: grid;
   grid: 1fr / 350px 1fr auto;
   grid-template-areas: 'menu canvas-container';
+  background-color: black;
+  color: rgba(255, 255, 255, 0.9);
+  color-scheme: dark;
 }
 
 .canvas-container {
@@ -13,4 +16,8 @@
 canvas {
   image-rendering: pixelated;
   margin: auto;
+}
+
+button {
+  color: inherit;
 }

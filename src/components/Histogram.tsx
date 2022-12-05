@@ -43,9 +43,9 @@ function Histogram() {
   }, [image, histogramEffectTrigger]);
 
   return (
-    <div className='menu' style={{ width: 350 }}>
+    <div className='menu' id='histogram'>
       <header>
-        <h1>Histogram</h1>
+        <h1 style={{ minWidth: 320 }}>Histogram</h1>
       </header>
       {histogramData && (
         <>

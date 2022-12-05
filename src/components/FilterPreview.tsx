@@ -9,8 +9,9 @@ function FilterPreview() {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current.getContext('2d')!;
     ctx.clearRect(0, 0, 256, 256);
+    ctx.fillStyle = '#ffffff';
     for (let x = 0; x < 256; x++) {
-      ctx.fillRect(x, 255 - clamp(filter.fn(x)), 1, 1);
+      ctx.fillRect(x, 255 - clamp(filter.fn(x)), 2, 2);
     }
   }, [filter]);
 
@@ -20,7 +21,8 @@ function FilterPreview() {
       width={256}
       height={256}
       style={{
-        border: '2px black solid',
+        // border: '2px #555555 solid',
+        backgroundColor: '#333333',
       }}
     />
   );

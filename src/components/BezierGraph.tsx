@@ -65,7 +65,8 @@ function BezierGraph() {
     ctx.clearRect(0, 0, 256, 256);
 
     // draw dashed line
-    ctx.strokeStyle = '#444';
+    ctx.strokeStyle = '#bbb';
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.setLineDash([8, 8]);
     ctx.moveTo(0, 255);
@@ -76,14 +77,14 @@ function BezierGraph() {
 
     // draw bezier curve
     ctx.setLineDash([]);
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = '#ffffff';
     ctx.beginPath();
     ctx.moveTo(0, 255);
     ctx.bezierCurveTo(p1.x, 255 - p1.y, p2.x, 255 - p2.y, 255, 0);
     ctx.stroke();
 
     // draw bezier points
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = '#66ff66';
     ctx.beginPath();
     ctx.arc(p1.x, 255 - p1.y, POINT_RADIUS, 0, 2 * Math.PI);
     ctx.fill();
@@ -151,7 +152,7 @@ function BezierGraph() {
         onMouseMove={handleMouseMove}
         height={255}
         width={255}
-        style={{ border: '2px black solid' }}
+        style={{ backgroundColor: '#333333' }}
       />
     </div>
   );
