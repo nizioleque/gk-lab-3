@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
-export default function useForceRerender() {
-  const [, updateState] = useState();
-  const forceRerender = useCallback(() => updateState({} as any), []);
+export default function useRefreshHistogram() {
+  const [state, setState] = useState<boolean>(false);
+  const refreshHistogram = () => setState((oldValue) => !oldValue);
 
-  return { forceRerender };
+  return { effectTrigger: state, refreshHistogram };
 }

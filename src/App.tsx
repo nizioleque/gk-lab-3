@@ -2,7 +2,7 @@ import Canvas from './components/Canvas';
 import './App.css';
 import Menu from './components/Menu';
 import { AppContext } from './AppContext';
-import useForceRerender from './hooks/useForceRerender';
+import useRefreshHistogram from './hooks/useForceRerender';
 import useError from './hooks/useError';
 import useImage from './hooks/useImage';
 import Histogram from './components/Histogram';
@@ -11,30 +11,28 @@ import useFilter from './hooks/useFilter';
 import { useState } from 'react';
 
 function App() {
-  const { forceRerender } = useForceRerender();
+  const { effectTrigger, refreshHistogram } = useRefreshHistogram();
   const { showError, errorText, setErrorText } = useError();
 
   const { image, readImageFile } = useImage();
   const { drawMode, setDrawMode } = useDrawMode();
   const { filter, setFilter } = useFilter();
-  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
   const [currentBezier, setCurrentBezier] = useState<number[]>([]);
 
   return (
     <AppContext.Provider
       value={{
         setErrorText,
-        forceRerender,
         image,
         readImageFile,
         drawMode,
         setDrawMode,
         filter,
         setFilter,
-        isMouseDown,
-        setIsMouseDown,
         currentBezier,
         setCurrentBezier,
+        effectTrigger,
+        refreshHistogram,
       }}
     >
       <div className='App'>
