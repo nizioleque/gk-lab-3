@@ -83,7 +83,7 @@ function BezierGraph() {
     ctx.stroke();
 
     // draw bezier points
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'darkorange';
     ctx.beginPath();
     ctx.arc(p1.x, 255 - p1.y, POINT_RADIUS, 0, 2 * Math.PI);
     ctx.fill();
