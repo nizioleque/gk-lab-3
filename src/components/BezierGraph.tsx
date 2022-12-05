@@ -1,11 +1,7 @@
 import { useContext, useRef, MouseEvent, useEffect } from 'react';
 import { AppContext } from '../AppContext';
 import { FilterType } from '../hooks/useFilter';
-
-interface Point {
-  x: number;
-  y: number;
-}
+import { Point } from '../hooks/useMouseHandlers';
 
 const POINT_RADIUS = 5;
 

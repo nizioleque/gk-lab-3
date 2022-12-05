@@ -73,6 +73,8 @@ function Menu() {
             duration={300}
             easing='ease-in-out'
           >
+            Kliknij w dowolnym miejscu aby zacząć rysowanie wielokąta.
+            <br />
             Obszar zostanie zamalowany po zamknięciu wielokąta
           </AnimateHeight>
         </div>

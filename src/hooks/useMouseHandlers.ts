@@ -1,15 +1,17 @@
-import { useContext, useRef, MouseEvent } from 'react';
+import { useContext, useRef, MouseEvent, useEffect } from 'react';
 import { AppContext } from '../AppContext';
-import { BRUSH_RADIUS } from './useDraw';
+import fillPolygon from '../fillPolygon';
+import { BRUSH_RADIUS, POINT_RADIUS } from './useDraw';
 import { DrawMode } from './useDrawMode';
 
-interface Point {
+export interface Point {
   x: number;
   y: number;
 }
 
 export interface DrawState {
   polygon?: Point[];
+  currentMousePosition?: Point;
   brushPosition?: Point;
   isPressed?: boolean;
   paintedPixels?: boolean[][];
@@ -21,6 +23,18 @@ export default function useMouseHandlers(
 ) {
   const { drawMode, image, filter, refreshHistogram } = useContext(AppContext);
   const drawState = useRef<DrawState>({});
+
+  useEffect(() => {
+    if (drawMode == DrawMode.Brush) {
+      drawState.current.polygon = undefined;
+      drawState.current.currentMousePosition = undefined;
+    }
+    if (drawMode == DrawMode.Polygon) {
+      drawState.current.brushPosition = undefined;
+      drawState.current.isPressed = false;
+      drawState.current.paintedPixels = undefined;
+    }
+  }, [drawMode]);
 
   const getMousePosition = (event: MouseEvent): Point => {
     const rect = canvasRef.current?.getBoundingClientRect()!;
@@ -42,6 +56,26 @@ export default function useMouseHandlers(
         );
         break;
       case DrawMode.Polygon:
+        const currentMousePosition = getMousePosition(event);
+        if (
+          drawState.current.polygon &&
+          drawState.current.polygon.length >= 2 &&
+          isInPoint(drawState.current.polygon[0], currentMousePosition)
+        ) {
+          const w = canvasRef.current?.width ?? 100;
+          const h = canvasRef.current?.height ?? 100;
+          fillPolygon(image!, drawState.current.polygon, filter.fn, w, h);
+          drawState.current.polygon = undefined;
+          drawState.current.currentMousePosition = undefined;
+          refreshHistogram();
+        } else {
+          if (!drawState.current.polygon) {
+            drawState.current.polygon = [];
+          }
+          drawState.current.polygon.push(currentMousePosition);
+          drawState.current.currentMousePosition = currentMousePosition;
+        }
+        draw(drawState.current);
         break;
     }
   };
@@ -84,6 +118,11 @@ export default function useMouseHandlers(
         draw(drawState.current);
         break;
       case DrawMode.Polygon:
+        if (drawState.current.polygon) {
+          const currentMousePosition = getMousePosition(event);
+          drawState.current.currentMousePosition = currentMousePosition;
+          draw(drawState.current);
+        }
         break;
     }
   };
@@ -101,10 +140,16 @@ export default function useMouseHandlers(
   };
 
   const handleMouseLeave = (event: MouseEvent) => {
-    drawState.current.isPressed = false;
-    drawState.current.brushPosition = undefined;
-    draw(drawState.current);
-    refreshHistogram();
+    switch (drawMode) {
+      case DrawMode.Brush:
+        drawState.current.isPressed = false;
+        drawState.current.paintedPixels = undefined;
+        refreshHistogram();
+        draw(drawState.current);
+        break;
+      case DrawMode.Polygon:
+        break;
+    }
   };
 
   return { handleMouseDown, handleMouseMove, handleMouseUp, handleMouseLeave };
@@ -112,4 +157,8 @@ export default function useMouseHandlers(
 
 function distSq(p1: Point, p2: Point): number {
   return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
+}
+
+function isInPoint(point: Point, mousePosition: Point): boolean {
+  return distSq(point, mousePosition) <= POINT_RADIUS * POINT_RADIUS * 4;
 }
