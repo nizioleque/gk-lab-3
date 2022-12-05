@@ -2,7 +2,6 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 import { DrawMode } from './hooks/useDrawMode';
 import { Filter, FilterType } from './hooks/useFilter';
 interface AppContext {
-  setErrorText: (text: string, timeout?: number) => void;
   image: ImageData | null;
   readImageFile: (file: Blob) => void;
   drawMode: DrawMode;
@@ -11,12 +10,13 @@ interface AppContext {
   setFilter: (type: FilterType, fn: (value: number) => number) => void;
   currentBezier: number[];
   setCurrentBezier: Dispatch<SetStateAction<number[]>>;
-  effectTrigger: boolean;
+  histogramEffectTrigger: boolean;
   refreshHistogram: () => void;
+  imageEffectTrigger: boolean;
+  refreshImage: () => void;
 }
 
 const appContextDefaultValue: AppContext = {
-  setErrorText: () => {},
   image: null,
   readImageFile: () => {},
   drawMode: DrawMode.Brush,
@@ -25,8 +25,10 @@ const appContextDefaultValue: AppContext = {
   setFilter: () => {},
   currentBezier: [],
   setCurrentBezier: () => {},
-  effectTrigger: false,
+  histogramEffectTrigger: false,
   refreshHistogram: () => {},
+  imageEffectTrigger: false,
+  refreshImage: () => {},
 };
 
 export const AppContext = createContext<AppContext>(appContextDefaultValue);

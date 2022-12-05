@@ -5,7 +5,7 @@ import useDraw from '../hooks/useDraw';
 import useMouseHandlers from '../hooks/useMouseHandlers';
 
 function Canvas() {
-  const { image } = useContext(AppContext);
+  const { image, imageEffectTrigger } = useContext(AppContext);
 
   const { canvasCtx, canvasRef } = useCanvas();
   const { draw } = useDraw(canvasCtx);
@@ -14,7 +14,7 @@ function Canvas() {
 
   useEffect(() => {
     draw();
-  }, [image]);
+  }, [image, imageEffectTrigger]);
 
   return (
     <canvas

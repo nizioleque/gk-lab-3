@@ -10,7 +10,7 @@ interface HistogramData {
 }
 
 function Histogram() {
-  const { image, effectTrigger } = useContext(AppContext);
+  const { image, histogramEffectTrigger } = useContext(AppContext);
 
   const [histogramData, setHistogramData] = useState<HistogramData | null>(
     null
@@ -40,7 +40,7 @@ function Histogram() {
 
   useEffect(() => {
     render();
-  }, [image, effectTrigger]);
+  }, [image, histogramEffectTrigger]);
 
   return (
     <div className='menu' style={{ width: 350 }}>

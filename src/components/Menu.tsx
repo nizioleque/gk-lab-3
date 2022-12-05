@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, MouseEvent } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { AppContext } from '../AppContext';
 import { DrawMode } from '../hooks/useDrawMode';
@@ -10,8 +10,16 @@ import FilterPreview from './FilterPreview';
 import './Menu.css';
 
 function Menu() {
-  const { readImageFile, drawMode, setDrawMode, filter, currentBezier } =
-    useContext(AppContext);
+  const {
+    readImageFile,
+    drawMode,
+    setDrawMode,
+    filter,
+    currentBezier,
+    image,
+    refreshHistogram,
+    refreshImage,
+  } = useContext(AppContext);
 
   const readExampleImage = (path: string) => {
     fetch(path)
@@ -74,6 +82,27 @@ function Menu() {
       <div className='menu-section'>
         <h3>Zaznaczanie</h3>
         <div className='buttons'>
+          <button
+            onClick={() => {
+              if (image) {
+                for (let i = 0; i < image.data.length; i++) {
+                  if (i % 4 === 3) continue;
+                  image.data[i] = filter.fn(image.data[i]);
+                }
+                refreshHistogram();
+                refreshImage();
+              }
+            }}
+            className={'menu-button'}
+            onMouseDown={(event: MouseEvent) =>
+              (event.target as HTMLElement).classList.add('active')
+            }
+            onMouseUp={(event: MouseEvent) =>
+              (event.target as HTMLElement).classList.remove('active')
+            }
+          >
+            Cały obraz
+          </button>
           <Button
             text='Pędzel kołowy'
             value={DrawMode.Brush}

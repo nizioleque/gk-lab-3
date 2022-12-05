@@ -2,18 +2,17 @@ import Canvas from './components/Canvas';
 import './App.css';
 import Menu from './components/Menu';
 import { AppContext } from './AppContext';
-import useRefreshHistogram from './hooks/useForceRerender';
-import useError from './hooks/useError';
+import useRefreshHistogram from './hooks/useRefreshHistogram';
 import useImage from './hooks/useImage';
 import Histogram from './components/Histogram';
 import useDrawMode from './hooks/useDrawMode';
 import useFilter from './hooks/useFilter';
 import { useState } from 'react';
+import useRefreshImage from './hooks/useRefreshImage';
 
 function App() {
-  const { effectTrigger, refreshHistogram } = useRefreshHistogram();
-  const { showError, errorText, setErrorText } = useError();
-
+  const { histogramEffectTrigger, refreshHistogram } = useRefreshHistogram();
+  const { imageEffectTrigger, refreshImage } = useRefreshImage();
   const { image, readImageFile } = useImage();
   const { drawMode, setDrawMode } = useDrawMode();
   const { filter, setFilter } = useFilter();
@@ -22,7 +21,6 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        setErrorText,
         image,
         readImageFile,
         drawMode,
@@ -31,8 +29,10 @@ function App() {
         setFilter,
         currentBezier,
         setCurrentBezier,
-        effectTrigger,
+        histogramEffectTrigger,
         refreshHistogram,
+        imageEffectTrigger,
+        refreshImage,
       }}
     >
       <div className='App'>
@@ -41,10 +41,6 @@ function App() {
           <Canvas />
         </div>
         <Histogram />
-      </div>
-      <div className={`alert ${showError ? 'show' : ''}`}>
-        <div className='alert-icon'>⚠️</div>
-        <div>{errorText}</div>
       </div>
     </AppContext.Provider>
   );

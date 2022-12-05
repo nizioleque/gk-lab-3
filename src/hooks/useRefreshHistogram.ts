@@ -4,5 +4,5 @@ export default function useRefreshHistogram() {
   const [state, setState] = useState<boolean>(false);
   const refreshHistogram = () => setState((oldValue) => !oldValue);
 
-  return { effectTrigger: state, refreshHistogram };
+  return { histogramEffectTrigger: state, refreshHistogram };
 }
