@@ -43,7 +43,7 @@ function Histogram() {
   }, [image, effectTrigger]);
 
   return (
-    <div className='menu' style={{ width: 341 }}>
+    <div className='menu' style={{ width: 350 }}>
       <header>
         <h1>Histogram</h1>
       </header>
