@@ -32,7 +32,7 @@ function Menu() {
   return (
     <div className='menu'>
       <header>
-        <h1>Filtrowanie</h1>
+        <h1>Image Filter</h1>
         <div className='name'>Norbert Niziołek</div>
         <a href='https://github.com/nizioleque/gk-lab-3' target='_blank'>
           Kod źródłowy i dokumentacja
