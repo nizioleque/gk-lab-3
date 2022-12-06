@@ -14,6 +14,7 @@ interface AppContext {
   refreshHistogram: () => void;
   imageEffectTrigger: boolean;
   refreshImage: () => void;
+  generateImage: (v: number) => void;
 }
 
 const appContextDefaultValue: AppContext = {
@@ -29,6 +30,7 @@ const appContextDefaultValue: AppContext = {
   refreshHistogram: () => {},
   imageEffectTrigger: false,
   refreshImage: () => {},
+  generateImage: () => {},
 };
 
 export const AppContext = createContext<AppContext>(appContextDefaultValue);

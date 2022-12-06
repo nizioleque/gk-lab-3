@@ -19,5 +19,5 @@ export default function useImage() {
     img.src = URL.createObjectURL(file);
   };
 
-  return { image, readImageFile };
+  return { image, readImageFile, setImage };
 }

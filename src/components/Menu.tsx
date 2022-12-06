@@ -1,4 +1,4 @@
-import { useContext, MouseEvent } from 'react';
+import { useContext, MouseEvent, useRef } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { AppContext } from '../AppContext';
 import { DrawMode } from '../hooks/useDrawMode';
@@ -19,7 +19,10 @@ function Menu() {
     image,
     refreshHistogram,
     refreshImage,
+    generateImage,
   } = useContext(AppContext);
+
+  const valueSliderRef = useRef<HTMLInputElement | null>(null);
 
   const readExampleImage = (path: string) => {
     fetch(path)
@@ -77,6 +80,36 @@ function Menu() {
             <div>Brighton</div>
             <button className='apply-button'>Otwórz</button>
           </div>
+        </div>
+      </div>
+      <div className='menu-section'>
+        <h3>Generowanie obrazu</h3>
+        <div className='buttons'>
+          <button
+            className='menu-button'
+            onMouseDown={(event: MouseEvent) =>
+              (event.target as HTMLElement).classList.add('active')
+            }
+            onMouseUp={(event: MouseEvent) =>
+              (event.target as HTMLElement).classList.remove('active')
+            }
+            onClick={() =>
+              generateImage(parseFloat(valueSliderRef.current?.value ?? '0.5'))
+            }
+          >
+            Generuj
+          </button>
+          <h5>VALUE</h5>
+          <input
+            type='range'
+            ref={valueSliderRef}
+            min={0}
+            max={1}
+            step={0.01}
+            onMouseUp={() =>
+              generateImage(parseFloat(valueSliderRef.current?.value ?? '0.5'))
+            }
+          />
         </div>
       </div>
       <div className='menu-section'>

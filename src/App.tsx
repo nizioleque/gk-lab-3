@@ -9,14 +9,16 @@ import useDrawMode from './hooks/useDrawMode';
 import useFilter from './hooks/useFilter';
 import { useState } from 'react';
 import useRefreshImage from './hooks/useRefreshImage';
+import useGenerateImage from './hooks/useGenerateImage';
 
 function App() {
   const { histogramEffectTrigger, refreshHistogram } = useRefreshHistogram();
   const { imageEffectTrigger, refreshImage } = useRefreshImage();
-  const { image, readImageFile } = useImage();
+  const { image, readImageFile, setImage } = useImage();
   const { drawMode, setDrawMode } = useDrawMode();
   const { filter, setFilter } = useFilter();
   const [currentBezier, setCurrentBezier] = useState<number[]>([]);
+  const { generateImage } = useGenerateImage(setImage);
 
   return (
     <AppContext.Provider
@@ -33,6 +35,7 @@ function App() {
         refreshHistogram,
         imageEffectTrigger,
         refreshImage,
+        generateImage,
       }}
     >
       <div className='App'>

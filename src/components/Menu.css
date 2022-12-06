@@ -143,6 +143,10 @@ input[type='file'] {
   accent-color: #6761e6;
 }
 
+input[type='range'] {
+  accent-color: #753714;
+}
+
 input[type='number'] {
   width: 100px;
   padding: 3px;
